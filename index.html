@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>YallaParking</title>
+    <link rel="icon" href="images/favicon-32x32.png">
+    <link href="yalla.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="glider.css" />
+    <link rel="stylesheet" type="text/css" href="./slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="./slick/slick-theme.css">
+  
+</head>
+<body>
+
+    <nav id="nav" role="navigation">
+        <a href="#nav" title="Show navigation">Show navigation</a>
+        <a href="#" title="Hide navigation">Hide navigation</a>
+        <ul class="clearfix">
+            <li class="left"><a href="#"><img height="45" alt="W3Schools" src="images/logo.png"></a></li>
+            <li><a href="#">Download Our App</a></li>
+            <li>
+                <a href="#" aria-haspopup="true"><span>Popular Areas</span></a>
+                <ul>
+                    <li><a href="#">Dubai Marina</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" aria-haspopup="true"><span>Popular Towers</span></a>
+                <ul>
+                            <li><a href="#">Burlington Tower</a></li>
+                            <li><a href="#">Clover Bay tower</a></li>
+                            <li><a href="#">Doubletree Bay Square</a></li>
+                            <li><a href="#">Movenpick JBR</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Parking Operators</a></li>
+            <div class="right">
+            <li><a href="#"><i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Log In</a></li>
+            <li><a href="#">Register</a></li>
+            </div>
+        </ul>
+    </nav>
+    <!-- {lat: 25, lng: 55.1} -->
+
+<div class="map">
+    <ul class="search-box">
+        <li><input id="pac-input" class="controls" type="text" placeholder="Where would you like to park?"></li>
+        <li><label>Select Start Date:</label></li>
+        <li><input id="pac-date" type="date"></li>
+        <li><input id="pac-button" type="button" value="search" onclick="initAutocomplete()"></li>
+
+    </ul>
+    <div id="map"></div>
+</div>
+<script>
+  // This example adds a search box to a map, using the Google Place Autocomplete
+  // feature. People can enter geographical searches. The search box will return a
+  // pick list containing a mix of places and predicted search terms.
+
+  // This example requires the Places library. Include the libraries=places
+  // parameter when you first load the API. For example:
+  // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+  function initAutocomplete() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: 25, lng: 55.1},
+      zoom: 13,
+      mapTypeId: 'roadmap'
+    });
+
+    // Create the search box and link it to the UI element.
+    var searchBox = new google.maps.places.SearchBox(document.getElementById('pac-input'));
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+      searchBox.setBounds(map.getBounds());
+    });
+
+    var markers = [];
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', function() {
+      var places = searchBox.getPlaces();
+
+      if (places.length == 0) {
+        return;
+      }
+
+      // Clear out the old markers.
+      markers.forEach(function(marker) {
+        marker.setMap(null);
+      });
+      markers = [];
+
+      // For each place, get the icon, name and location.
+      var bounds = new google.maps.LatLngBounds();
+      places.forEach(function(place) {
+        if (!place.geometry) {
+          console.log("Returned place contains no geometry");
+          return;
+        }
+        var icon = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25)
+        };
+
+        // Create a marker for each place.
+        markers.push(new google.maps.Marker({
+          map: map,
+          icon: icon,
+          title: place.name,
+          position: place.geometry.location
+        }));
+
+        if (place.geometry.viewport) {
+          // Only geocodes have viewport.
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      map.fitBounds(bounds);
+    });
+  }
+
+</script>
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDg9CbgLxHi9M4vorexQr7RH3WfYKXUEJg&libraries=places&callback=initAutocomplete"
+     async defer></script>
+
+    <div class="search">
+        <h1>Don't waste your time looking for a place to park</h1>
+        <h3>Search our listings and find the perfect spot near your home or office.</h3>
+        <br><br><br>
+        <ul>
+            <li>
+                <img src="images/mapIllustration@2x.png">
+                <h3>Search For Parking</h3>
+                <p>Search more than 700 parking spaces across Dubai</p>
+            </li>
+            <li>
+                <img src="images/bookIllustration@2x.png">
+                <h3>Book Parking</h3>
+                <p>Book & Pay online using our secure booking system.</p>
+            </li>
+            <li>
+                <img src="images/carIllustration@2x.png">
+                <h3>Park Your Car</h3>
+                <p>Receive your access card in 24 hours & park. It really is that simple.</p>
+            </li>
+        </ul>
+    </div>
+    <br><br><br><br>
+    <div class="partners">
+        <h1>Our Parking Partners </h1>
+        <h3>We are proudly partnered with the following companies</h3>
+    </div>    
+      <div class="glider-contain">
+            <div class="glider">
+                <div><img alt="Test" src="images/HomeToHome.png"></div>
+                <div><img alt="Test" src="images/mag.png"></div>
+                <div><img alt="Test" src="images/NationalCarParks.png"></div>
+                <div><img alt="Test" src="images/deyaar.png"></div>
+                <div><img alt="Test" src="images/doubletree.png"></div>
+                <div><img alt="Test" src="images/dubizzle.png"></div>
+                <div><img alt="Test" src="images/intrecontinental.png"></div>
+            </div>
+            <button class="glider-prev">&laquo;</button>
+            <button class="glider-next">&raquo;</button>
+        <div id="dots"></div>
+      </div>
+    <br><hr style="width: 70%; color: rgb(240, 240, 240, 0.5);"><br>
+    
+    <div>
+    <div class="places">
+        <h1>Popular Places in Dubai </h1>
+        <h3>We are proudly partnered with the following companies</h3>
+    </div>
+
+    <section class="center slider">
+        <div>
+          <a href="#"><h3>Jumeirah Lake Towers</h3><p>Find Parking in Jumeirah Lake Towers</p></a>
+          <a href="#"><img src="images/category-box-01.jpg"></a>
+        </div>
+        <div>
+          <a href="#"><h3>Dubai Marina</h3><p>Find Parking in Dubai Marina</p></a>
+          <a href="#"><img src="images/DubaiMarina.jpg"></a>
+        </div>
+        <div>
+          <img src="images/category-box-05.jpg">
+        </div>
+        <div>
+          <img src="images/barshaheights.png">
+        </div>
+        <div>
+          <img src="images/dubai-1367094_1280.jpg">
+        </div>
+        <div>
+          <a href="#"><h3>Sheikh Zayed Road</h3><p>Find Parking in Sheikh Zayed Road</p></a>
+          <a href="#"><img src="images/SZR.jpg"></a>
+        </div>
+      </section>
+    </div>
+    <br>
+
+    <div class="community">
+      <h1>Our Community</h1>
+      <h3>It's always good to hear what others think, check out these reviews from the awesome users & business partners we work with!</h3>
+      <br>
+      <ul class="regular">
+          <li><ul>
+            <p>With the summer heat in the 50's..outside parking wasn't an option...voila YallaParking...In just a couple minutes I was able to select my parking location online and received all confirmation details via email...!!</p>
+            <img width="60" height="60" src="images/ZAK_ILDUCELIBIA.jpg">
+            <p>Zak Ilducelibia</p>
+          </ul></li>
+    
+          <li><ul>
+           <p>Thank you YallaParking for easing my parking woes in Business Bay. You lot are stars!</p>
+            <img width="60" height="60" src="images/MUNAD_AKBARI.jpg">
+           <p>Zak Ilducelibia</p>
+          </ul></li>
+
+          <li><ul>
+            <p>Much needed service for Dubai. Easy to use. Great customer service.</p>
+            <img width="60" height="60" src="images/STEPHANIE_WILLIAMS.jpg">
+            <p>Zak Ilducelibia</p>
+          </ul></li>
+      </ul>
+    </div>
+
+  <div>
+    <h1>As featured in</h1>
+    <div class="logos" style="text-align: center;">
+      <img src="images/IncArabia.png">
+      <img src="images/Entrepreneur.png">
+      <img src="images/TheNational.png">
+      <img src="images/wamda.png">
+      <img src="images/Dubaieye.png">
+    </div>
+  </div>
+<br><br><br><br><br><br>
+  <div class="how">
+    <h1>How Listing Works </h1>
+    <h3>Help out a neighbour in need by easily adding your parking space.<br>We take care of the access cards, deposits, confirmation & payments.</h3>
+    <br><br>
+    <ul class="icons">
+      <li>
+        <i class="fas fa-map-marked-alt"></i>
+        <h4>List Parking</h4>
+        <p>Add your unused space & choose a price.</p>
+      </li>
+      <li>
+        <i class="fas fa-key"></i>
+        <h4>Confirm</h4>
+        <p>Confirm a convenient time for one of our team to pick up your access card when you receive a booking.</p>
+      </li>
+      <li>
+        <i class="fas fa-money-check-alt"></i>
+        <h4>Earn</h4>
+        <p>Earn money each Month from your unused space, deposited directly to your account.</p>
+      </li>
+    </ul>
+  </div>
+
+  <div class="list">
+    <div class="in">
+      <h1 style="color: white; padding: 30px 0;text-align: left;">List Your Parking Space</h1>
+      <h4 style="margin-bottom: 50px; color: white; text-align: left;">Join our growing community of over 700 parking spaces & start earning today.</h4>
+      <a href="#"><b>Let's Get Started</b></a>
+    </div>
+  </div><br>
+
+    <ul class="footer">
+      <li>
+        <ul>
+          <img height="45" alt="W3Schools" src="images/logo.png">
+          <p class="rent">Rent an unused space from a neighbour in your building or area, OR, earn money renting yours out to a neighbour in need.</p>
+        </ul>
+      </li>
+      <li>
+        <ul>
+         <h3>Popular Towers</h3>
+          <span>&#10095;</span>&nbsp;&nbsp;<a href="#" target="_blank">Burlington Tower</a><br>
+          <span>&#10095;</span>&nbsp;&nbsp;<a href="#" target="_blank">Clover Bay tower</a><br>
+          <span>&#10095;</span>&nbsp;&nbsp;<a href="#" target="_blank">Doubletree Bay Square</a><br>
+          <span>&#10095;</span>&nbsp;<a href="#" target="_blank">Movenpick JBR</a>
+        </ul>
+      </li>
+      <li>
+        <ul>
+          <h3>Popular Areas</h3></li>
+          <span>&#10095;</span>&nbsp;<a href="#" target="_blank">Dubai Marina</a>
+        </ul>
+      </li>
+      <li>
+        <ul>
+          <h3>Popular Towers</h3></li>
+          <span>&#10095;</span>&nbsp;&nbsp;<a href="#" target="_blank">Log In</a><br>
+          <span>&#10095;</span>&nbsp;&nbsp;<a href="#" target="_blank">Register</a><br>
+          <span>&#10095;</span>&nbsp;&nbsp;<a href="#" target="_blank">Blog</a><br>
+          <span>&#10095;</span>&nbsp;&nbsp;<a href="#" target="_blank">About Us</a><br>
+          <span>&#10095;</span>&nbsp;&nbsp;<a href="#" target="_blank">Commercial Partners</a>
+        </ul>
+      </li>
+      <li class="contact">
+        <ul>
+          <h3>Contact Us</h3></li>
+          <p class="rent">In5 Innovation Centre, Boutique Office Villa #7, Dubai Media City, Dubai, United Arab Emirates<br>Phone: +971 (45) 217 448<br>E-Mail:</p></li>
+          <a style="color: #F18120;" class="mail" href="mailto:bookings@yallaparking.com">bookings@yallaparking.com</a>
+          <a class="soc" href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class="soc" href="#" target="_blank"><i class="fab fa-twitter"></i></i></a>
+          
+        </ul>
+      </li>
+    </ul>
+  <br><hr style="position: relative; width: 90%; color: rgb(240, 240, 240, 0.5);"><br>
+  <div class="rights">© 2017 - 2020 YallaParking Internet FZ LLC. All Rights Reserved.</div>
+  
+  <button onclick="topFunction()" id="myBtn" title="Go to top" class="top" href="#"><span>&#8248;</span></button>
+
+    <script src="glider.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+    <script src="./slick/slick.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script type="text/javascript">
+        $(document).on('ready', function() {   
+          $(".center").slick({
+            dots: true,
+            infinite: true,
+            centerMode: true,
+            slidesToShow: 3,
+            slidesToScroll: 3
+          });
+          $(".regular").slick({
+            dots: true,
+            infinite: true,
+            slidesToShow: 3,
+            slidesToScroll: 3
+          });
+        });
+    </script>
+    <script>
+      //Get the button
+      var mybutton = document.getElementById("myBtn");
+      
+      // When the user scrolls down 20px from the top of the document, show the button
+      window.onscroll = function() {scrollFunction()};
+      
+      function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          mybutton.style.opacity = "1";
+        } else {
+          mybutton.style.opacity = "0";
+        }
+      }
+      
+      // When the user clicks on the button, scroll to the top of the document
+      function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+    </script>
+</body>
+</html>
